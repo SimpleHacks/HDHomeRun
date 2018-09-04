@@ -1,0 +1,16 @@
+#!/usr/bin/python
+import requests, json
+import urllib
+
+vars = {}
+r=requests.get('http://hdhomerun/discover.json')
+vars['DeviceAuth'] = r.json()['DeviceAuth']
+qstring = urllib.urlencode(vars)
+print qstring
+url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
+r = requests.get(url)
+#print r.text
+j = r.json()
+print "RuleID  / SeriesID       Title"
+for recording in j:
+	print recording["RecordingRuleID"] + ' / ' + recording["SeriesID"] + ': ' + recording["Title"]

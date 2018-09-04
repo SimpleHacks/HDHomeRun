@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --silent https://api.hdhomerun.com/api/recording_rules?DeviceAuth=`curl --silent http://hdhomerun/discover.json | sed "s/.*DeviceAuth..//" | sed "s/.,.*$//"`

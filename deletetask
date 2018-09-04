@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+# Note: you need to get the recordingruleID from tasks script
+
+import requests, json
+import urllib
+import sys
+
+vars = {}
+
+# The rule ID comes from the command line
+try:
+	vars['RecordingRuleID'] = sys.argv[1]
+except:
+	print "\ndeleterecording <recordingRule>\n"
+	print "Recording rule IDs can be obtained using the recordings script\n\n"
+	exit()
+
+vars['Cmd'] = 'delete'
+
+r=requests.get('http://hdhomerun/discover.json')
+vars['DeviceAuth'] = r.json()['DeviceAuth']
+
+qstring = urllib.urlencode(vars)
+url = "https://api.hdhomerun.com/api/recording_rules?" + qstring
+#print url
+
+r = requests.get(url)
+print r.text
+#j = r.json()
+#for recording in j:
+#	print recording["SeriesID"] + ': ' + recording["Title"]

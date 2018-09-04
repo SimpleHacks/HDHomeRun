@@ -1,0 +1,36 @@
+#!/usr/bin/python
+# To add a series you need the series ID from the search script
+
+import requests, json
+import urllib
+import sys
+import time
+
+vars = {}
+# Use the imput for search
+try:
+	vars['SeriesID'] = sys.argv[1]
+except:
+	print "\nupcoming <seriesID>\n"
+	print "SeriesID can be obtained using the tasks script\n\n"
+	exit()
+
+r=requests.get('http://hdhomerun/discover.json')
+vars['DeviceAuth'] = r.json()['DeviceAuth']
+
+qstring = urllib.urlencode(vars)
+url = "https://api.hdhomerun.com/api/episodes?" + qstring
+#print url
+
+r = requests.get(url)
+#print r.text
+j = r.json()
+for recording in j:
+	#print recording
+	try:
+		etitle = recording["EpisodeTitle"]
+	except:
+		etitle = ''
+	stime = time.strftime( "%a, %d %b %Y %H:%M", time.localtime(recording["StartTime"]) )
+	etime = time.strftime( "%H:%M", time.localtime(recording["EndTime"]) )
+	print stime + '-' + etime, recording["ChannelNumber"], recording["Title"] + ': ' + etitle
