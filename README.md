@@ -10,5 +10,6 @@ The .zip file contains executables that run on Window systems (without Python).
 * deletetask - Delete a task (get the Task ID using tasks)
 * upcoming - List upcoming episodes for a Series ID
 * allupcoming - List upcoming episodes for all series
+* movies - List upcoming movies
 
 The most complex part of these scripts is the discovery, the entire credit for that goes to Gary Burh: https://github.com/garybuhrmaster/HDHRUtil
