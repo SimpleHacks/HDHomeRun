@@ -103,16 +103,26 @@ def HDHRdiscover():
     return eligibleTuners
 
 vars = {}
-discoveredHDHRs = HDHRdiscover()
-#print discoveredHDHRs
-vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
-
+try:
+	device = sys.argv[1]
+	url = 'http://' + device + '/discover.json'
+	r = requests.get(url)
+	j = r.json()
+	vars['DeviceAuth'] = j['DeviceAuth']
+except:
+	try:
+		discoveredHDHRs = HDHRdiscover()
+		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
+	except:
+		print "Discovery failed, use: " + __file__ + " \"Search String\" x.x.x.x (HDHomeRun IP)"
+		exit()	
 
 try:
 	vars['Search'] = sys.argv[1]
 except:
 	print "\nsearch <searchstring>\n"
-	print "Use quotes for a multi-word search string\n\n"
+	print "Use quotes for a multi-word search string"
+	print "Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n"
 	exit()
 
 qstring = urllib.urlencode(vars)

@@ -91,12 +91,24 @@ def HDHRdiscover():
         discoverResponse['LocalIP'] = device
         eligibleTuners.append(discoverResponse)
 
+	eligibleTuners = []
     return eligibleTuners
 
 vars = {}
-discoveredHDHRs = HDHRdiscover()
-#print discoveredHDHRs[0]["LocalIP"]
-vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
+try:
+	device = sys.argv[1]
+	url = 'http://' + device + '/discover.json'
+	r = requests.get(url)
+	j = r.json()
+	vars['DeviceAuth'] = j['DeviceAuth']
+except:
+	try:
+		discoveredHDHRs = HDHRdiscover()
+		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
+	except:
+		print "Discovery failed, use: " + __file__ + " x.x.x.x (HDHomeRun IP)"
+		exit()	
+
 qstring = urllib.urlencode(vars)
 #print qstring
 url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
