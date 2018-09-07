@@ -120,7 +120,7 @@ except:
 try:
 	vars['Search'] = sys.argv[1]
 except:
-	print "\nsearch <searchstring>\n"
+	print "\nsearch <searchstring> [HDHR-IP}\n"
 	print "Use quotes for a multi-word search string"
 	print "Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n"
 	exit()

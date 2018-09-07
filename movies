@@ -91,7 +91,6 @@ def HDHRdiscover():
         discoverResponse['LocalIP'] = device
         eligibleTuners.append(discoverResponse)
 
-	eligibleTuners = []
     return eligibleTuners
 
 vars = {}
