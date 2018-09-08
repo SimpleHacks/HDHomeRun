@@ -117,7 +117,7 @@ except:
 		discoveredHDHRs = HDHRdiscover()
 		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
 	except:
-		print "Discovery failed, use: " + __file__ + " <seriesID> x.x.x.x (HDHomeRun IP)"
+		print ("Discovery failed, use: " + __file__ + " <seriesID> x.x.x.x (HDHomeRun IP)")
 		exit()	
 
 vars['Cmd'] = 'add'
@@ -126,9 +126,9 @@ vars['StartPadding'] = '0'
 try:
 	vars['SeriesID'] = sys.argv[1]
 except:
-	print "\naddseries <seriesID> [HDHR-IP]\n"
-	print "SeriesID can be obtained using the search script"
-	print "Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n"
+	print ("\naddseries <seriesID> [HDHR-IP]\n")
+	print ("SeriesID can be obtained using the search script")
+	print ("Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n")
 	exit()
 
 qstring = urllib.urlencode(vars)
@@ -139,4 +139,4 @@ r = requests.get(url)
 #print r.text
 j = r.json()
 for recording in j:
-	print recording["RecordingRuleID"] + ': ' + recording["Title"]
+	print (recording["RecordingRuleID"] + ': ' + recording["Title"])

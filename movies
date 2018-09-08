@@ -114,6 +114,7 @@ url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
 r = requests.get(url)
 t = r.json()
 
+done = []
 for task in t:
 	if not re.match(r"^MV", task["SeriesID"]):
 		continue
@@ -129,7 +130,10 @@ for task in t:
 	#print r.text
 	j = r.json()
 	for recording in j:
-		#print recording
+		if recording['ProgramID'] in done:
+			continue
+		else:
+			done.append(recording['ProgramID'])
 		try:
 			etitle = recording["EpisodeTitle"]
 		except:

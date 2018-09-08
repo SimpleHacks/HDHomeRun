@@ -103,7 +103,7 @@ except:
 		discoveredHDHRs = HDHRdiscover()
 		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
 	except:
-		print "Discovery failed, use: " + __file__ + " x.x.x.x (HDHomeRun IP)"
+		print ("Discovery failed, use: " + __file__ + " x.x.x.x (HDHomeRun IP)")
 		exit()	
 
 qstring = urllib.urlencode(vars)
@@ -112,6 +112,6 @@ url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
 r = requests.get(url)
 #print r.text
 j = r.json()
-print "RuleID  / SeriesID       Title"
+print ("RuleID  / SeriesID       Title")
 for recording in j:
-	print recording["RecordingRuleID"] + ' / ' + recording["SeriesID"] + ': ' + recording["Title"]
+	print (recording["RecordingRuleID"] + ' / ' + recording["SeriesID"] + ': ' + recording["Title"])

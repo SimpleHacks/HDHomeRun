@@ -114,15 +114,15 @@ except:
 		discoveredHDHRs = HDHRdiscover()
 		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
 	except:
-		print "Discovery failed, use: " + __file__ + " \"Search String\" x.x.x.x (HDHomeRun IP)"
+		print ("Discovery failed, use: " + __file__ + " \"Search String\" x.x.x.x (HDHomeRun IP)")
 		exit()	
 
 try:
 	vars['Search'] = sys.argv[1]
 except:
-	print "\nsearch <searchstring> [HDHR-IP}\n"
-	print "Use quotes for a multi-word search string"
-	print "Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n"
+	print ("\nsearch <searchstring> [HDHR-IP}\n")
+	print ("Use quotes for a multi-word search string")
+	print ("Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n")
 	exit()
 
 qstring = urllib.urlencode(vars)

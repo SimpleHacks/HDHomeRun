@@ -118,16 +118,16 @@ except:
 		discoveredHDHRs = HDHRdiscover()
 		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
 	except:
-		print "Discovery failed, use: " + __file__ + " <taskID> x.x.x.x (HDHomeRun IP)"
+		print ("Discovery failed, use: " + __file__ + " <taskID> x.x.x.x (HDHomeRun IP)")
 		exit()	
 
 # The rule ID comes from the command line
 try:
 	vars['RecordingRuleID'] = sys.argv[1]
 except:
-	print "\ndeletetask <taskID> [HDHR-IP]\n"
-	print "Task/rule IDs can be obtained using the tasks script"
-	print "Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n"
+	print ("\ndeletetask <taskID> [HDHR-IP]\n")
+	print ("Task/rule IDs can be obtained using the tasks script")
+	print ("Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n")
 	exit()
 
 vars['Cmd'] = 'delete'
@@ -141,4 +141,4 @@ r = requests.get(url)
 #print r.text
 #j = r.json()
 #for recording in j:
-#	print recording["SeriesID"] + ': ' + recording["Title"]
+#	print (recording["SeriesID"] + ': ' + recording["Title"])
