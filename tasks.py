@@ -1,4 +1,8 @@
 #!/usr/bin/python
+
+# enable print() function even in python2
+from __future__ import print_function
+
 import requests, json
 import urllib
 import socket
