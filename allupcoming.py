@@ -123,7 +123,7 @@ except:
 		exit()	
 
 qstring = urllib.urlencode(vars)
-#print qstring
+#print (qstring)
 url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
 r = requests.get(url)
 t = r.json()
@@ -133,15 +133,15 @@ for task in t:
 	vars['SeriesID'] = task["SeriesID"]
 	qstring = urllib.urlencode(vars)
 	url = "https://api.hdhomerun.com/api/episodes?" + qstring
-	#print url
+	#print (url)
 	r = requests.get(url)
 	if r.text == "null":
 		print ("*** NO UPCOMING EPISODES ***")
 		continue
-	#print r.text
+	#print (r.text)
 	j = r.json()
 	for recording in j:
-		#print recording
+		#print (recording)
 		try:
 			etitle = recording["EpisodeTitle"]
 		except:
