@@ -110,4 +110,4 @@ def HDHRdiscover():
     return eligibleTuners
 
 discoveredHDHRs = HDHRdiscover()
-print discoveredHDHRs
+print ( discoveredHDHRs )

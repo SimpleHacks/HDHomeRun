@@ -109,11 +109,11 @@ except:
 		discoveredHDHRs = HDHRdiscover()
 		vars['DeviceAuth'] = discoveredHDHRs[0]['DeviceAuth']
 	except:
-		print "Discovery failed, use: " + __file__ + " x.x.x.x (HDHomeRun IP)"
+		print ("Discovery failed, use: " + __file__ + " x.x.x.x (HDHomeRun IP)")
 		exit()	
 
 qstring = urllib.urlencode(vars)
-#print qstring
+#print (qstring)
 url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
 r = requests.get(url)
 t = r.json()
@@ -122,16 +122,16 @@ done = []
 for task in t:
 	if not re.match(r"^MV", task["SeriesID"]):
 		continue
-	#print task["RecordingRuleID"] + ' / ' + task["SeriesID"] + ': ' + task["Title"]
+	#print (task["RecordingRuleID"] + ' / ' + task["SeriesID"] + ': ' + task["Title"])
 	vars['SeriesID'] = task["SeriesID"]
 	qstring = urllib.urlencode(vars)
 	url = "https://api.hdhomerun.com/api/episodes?" + qstring
-	#print url
+	#print (url)
 	r = requests.get(url)
 	if r.text == "null":
 		print "*** NO UPCOMING EPISODES ***"
 		continue
-	#print r.text
+	#print (r.text)
 	j = r.json()
 	for recording in j:
 		if recording['ProgramID'] in done:
@@ -144,4 +144,4 @@ for task in t:
 			etitle =  task["Title"]
 		stime = time.strftime( "%a, %d %b %Y %H:%M", time.localtime(recording["StartTime"]) )
 		etime = time.strftime( "%H:%M", time.localtime(recording["EndTime"]) )
-		print stime + '-' + etime, recording["ChannelNumber"], recording["Title"] + ': ' + etitle
+		print (stime + '-' + etime, recording["ChannelNumber"], recording["Title"] + ': ' + etitle)

@@ -134,13 +134,13 @@ except:
 
 qstring = urllib.urlencode(vars)
 url = "https://api.hdhomerun.com/api/episodes?" + qstring
-#print url
+#print (url)
 
 r = requests.get(url)
-#print r.text
+#print (r.text)
 j = r.json()
 for recording in j:
-	#print recording
+	#print (recording)
 	try:
 		etitle = recording["EpisodeTitle"]
 	except:

@@ -111,10 +111,10 @@ except:
 		exit()	
 
 qstring = urllib.urlencode(vars)
-#print qstring
+#print (qstring)
 url = 'https://api.hdhomerun.com/api/recording_rules?' + qstring
 r = requests.get(url)
-#print r.text
+#print (r.text)
 j = r.json()
 print ("RuleID  / SeriesID       Title")
 for recording in j:
