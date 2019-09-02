@@ -1,6 +1,8 @@
 #!/usr/bin/python
-
 # Note: you need to get the recordingruleID from tasks script
+
+# enable print() function even in python2
+from __future__ import print_function
 
 import requests, json
 import urllib
