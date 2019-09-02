@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # To add a series you need the series ID from the search script
 
+# enable print() function even in python2
+from __future__ import print_function
+
+
 import requests, json
 import urllib
 import sys
