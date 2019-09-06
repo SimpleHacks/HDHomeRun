@@ -6,25 +6,25 @@ from __future__ import print_function
 
 
 import requests, json
-import urllib
+import platform
+
+# Modules are not covered in __future__, but still changed APIs...
+# search for all usage of this variable to find relevant parts
+is_py2 = platform.python_version_tuple()[0] == '2'
+if is_py2:
+    import urllib
+else:
+    # the urllib module was split into three modules in Python3...
+    import urllib.request, urllib.parse, urllib.error
+
 import sys
 import socket
 
 def HDHRdiscover():
 
-    #
-    # Try a few different ways to identify eligible HDHRs
-    #
-    #
-    # First, obtain list from my.hdhomerun.com (SD provided service)
-    #
-    # Second, try to get a list of IP addresses that appear to
-    # be tuners (via a hand constructed packet (we just collect
-    # the IP addresses, and then perform a discovery)
-    #
-
     discoveredTuners = {}
 
+    # 1. Add to 'discoveredTuners' from discovery URL (https://my.hdhomerun.com/discover)
     SDdiscover = []
     try:
         r = requests.get('https://my.hdhomerun.com/discover', timeout=(.5, .2))
@@ -34,9 +34,11 @@ def HDHRdiscover():
             SDdiscover = []
     except (requests.exceptions.RequestException, json.decoder.JSONDecodeError):
         SDdiscover = []
+    # print (SDdiscover)
 
     for device in SDdiscover:
         if not isinstance(device, dict):
+            print ("ignoring device ", device)
             continue
         Legacy = False
         DeviceID = None
@@ -56,9 +58,10 @@ def HDHRdiscover():
 
         discoveredTuners[LocalIP] = DiscoverURL
 
-    discovery_udp_port = 65001
-    # Hand constructed discovery message (device type = tuner, device id = wildcard)
+
+    # 2. Add to 'discoveredTuners' from a hand-constructed UDP discovery message (device type = tuner, device id = wildcard)
     discovery_udp_msg = bytearray.fromhex('00 02 00 0c 01 04 00 00 00 01 02 04 ff ff ff ff 4e 50 7f 35')
+    discovery_udp_port = 65001
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     sock.settimeout(.2)
@@ -79,6 +82,7 @@ def HDHRdiscover():
 
     eligibleTuners = []
 
+    # 3. Filter the 'discoveredTuners' into 'eligibleTuners', adding 'LocalIP' property
     for device in discoveredTuners:
         discoverResponse = {}
         try:
@@ -135,7 +139,10 @@ except:
 	print ("Optional - you can put the IP of your HDHomeRun device at the end if discovery isn't working\n\n")
 	exit()
 
-qstring = urllib.urlencode(vars)
+if is_py2:
+	qstring = urllib.urlencode(vars)
+else:
+	qstring = urllib.parse.urlencode(vars)
 url = "https://api.hdhomerun.com/api/recording_rules?" + qstring
 #print (url)
 
